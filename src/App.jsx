@@ -2,7 +2,7 @@ import React from 'react';
 import { useState ,useEffect} from 'react'
 import WeatherDetail from './Weather_details';
 import axios from 'axios';
-import {imgtemp}  from './assets/imgtemp.jpeg';
+import imgtemp from './assets/imgtemp.jpeg';
 
 const KelvinToCelsius=(fahrenheit)=>{
   return((fahrenheit-273.15).toFixed(2));
@@ -23,13 +23,14 @@ function App(){
 const getWeatherData=async()=>{
   const response=await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY} `);
   const weatherData=response.data;
+  console.log(response.data);
   setWeather({
     temp:weatherData.main.temp,
     visibility:weatherData.visibility,
     humidity:weatherData.main.humidity,
-    minTemp:weatherData.main.minTemp,
-    maxTemp:weatherData.main.maxTemp,
-    feelsLike:weatherData.main.feelsLike,
+    minTemp:weatherData.main.temp_min,
+    maxTemp:weatherData.main.temp_max,
+    feelsLike:weatherData.main.feels_like,
   });
 };
 
@@ -39,10 +40,9 @@ useEffect(()=>{
 
   return(
   <div className="bg-amber-300 min-h-screen pb-10">
-    <img src={imgtemp} alt="Weather Main" className='h-[300px] mx-auto'/>
-    <h1 className="text-center">Wheather App</h1>
-    <input type="text" value={city} onChange={(e)=>setCity(e.target.value)} 
-    className="border-2 border-gray-400 p-2 w-1/2 block mx-auto bg-white text-5xl text-center focus:outline-none rounded-full "></input>
+    <img src={imgtemp} alt="Weather Main" className='h-[250px] mx-auto'/>
+    <input type="text" placeholder="Enter city name" value={city} onChange={(e)=>setCity(e.target.value)} 
+    className="border-2 border-gray-400 p-2 w-1/2 block mx-auto bg-white text-4xl text-center focus:outline-none rounded-full mt-5 "></input>
      
      <div className="bg-white opacity-80 p-4 mt-4 w-1/2 mx-auto rounded-lg text-2xl">
         <WeatherDetail detail={"Temperature"} value={`${KelvinToCelsius(weather.temp)}°C `}/>
