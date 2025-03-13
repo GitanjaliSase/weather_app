@@ -14,8 +14,8 @@ function App(){
   feelsLike:32,
   });
 
-const getWeatherData=()=>{
-  const response=axios.get{`https://api.openweathermap.org/data/2.5/weather?q=London&appid={API key} `}
+const getWeatherData=async()=>{
+  const response=await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=London&appid={API key} `);
 };
 
 useEffect(()=>{
